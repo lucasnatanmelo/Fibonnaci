@@ -1,15 +1,13 @@
-let fiboString = '';
-
 document.querySelector('.generatorInput').addEventListener('submit', e =>{
     e.preventDefault(); //Função para bloquear função padrão de formulário
 
     var input = document.querySelector('#inputNumber').value; //Armazena o valor
 
     if(input === ''){
+        clearInfo();
         showWarning('');
     } else if(input > 0){
         showFibo(input);
-        console.log(fiboString)
     } else if(input <= 0){
         clearInfo();
         showWarning('Valor não pode ser menor ou igual 0');
@@ -17,36 +15,23 @@ document.querySelector('.generatorInput').addEventListener('submit', e =>{
 });
 
 function showFibo(input){
-    fiboString = '';
-    let a1 = 1;
-    let a2 = 1;
-    let a3 = 0;
-    document.querySelector('.boxResult').style.display = 'block';
-    if(input === '1'){
-        fiboString = `${a1}` ;
-        //console.log(typeof(fiboString));
-        //console.log(fiboString);
-        document.querySelector('.sequence').innerHTML = fiboString;
-        
-    }
-    if(input === '2'){
-        fiboString = `${a1}, ${a2}`;
-        //console.log(typeof(fiboString));
-        //console.log(fiboString);
-        document.querySelector('.sequence').innerHTML = fiboString;
-    }
-    if(input >= '3'){
-        
-        fiboString = `1, 1`;
-        for(i = 2; i <= (input - 1) ; i++){
-            a3 = a1 + a2;
-            fiboString = fiboString.concat(`, ${a3}`);
-            //console.log(typeof(fiboString));
-            //console.log(fiboString);
-            a1 = a2;
-            a2 = a3;
+    const inputFiboValue = parseInt(input);
+    console.log(inputFiboValue);
+    let fiboString = "";
+    if(typeof(inputFiboValue) === 'number'){
+        let previousValue = 0;
+        let currentValue = 1;
+        let aux = 0;
+        for (let i = 1; i <= inputFiboValue; i++) {
+            fiboString += `${currentValue} `;
+            aux = currentValue + previousValue;
+            previousValue = currentValue;
+            currentValue = aux;
         }
-    document.querySelector('.sequence').innerHTML = fiboString;
+        console.log(fiboString);
+        document.querySelector('.boxResult').style.display = 'block';
+        document.querySelector('.sequence').innerHTML = fiboString;
+        showWarning('')
     }
 }
 function clearInfo(){
